@@ -1,0 +1,42 @@
+DB 파일
+
+- 오라클 (설치 유의사항)
+  ㅁ 컴퓨터명은 영문
+  ㅁ 오라클 installer.exe 파일은 영문, 띄어쓰기x 로 구성된 디렉토리에 저장
+  ㅁ 윈도우 - 서비스 - 오라클 관련 exe 실행 수동
+
+▶ 오라클 실습
+  - sql 최고권한자 접속 : sqlplus sys/ as sysdba (비번입력 안해도 됨)
+                                sys/ as sysdba (비번입력 안해도 됨)
+  - sql 연결재요청 : connect sys/ as sysdba
+  - SQLPlus 에서 콘솔화면 캡쳐기능 : spool '파일명'
+                                  캡쳐종료 : spool off
+
+  - Mysql / Maria.db
+
+▶ MySQL 실습
+  - 접속방법
+     1. 시작프로그램에서 직접 mysql 실행
+     2. Dos를 이용하여 mysql.exe 파일이 있는 폴더로 이동하여 실행
+       - cd 'C:\MariaDB 10.3\bin'
+       - mysql -u root -p
+  
+  - DB생성
+    - create database DB명;
+
+  - User 생성
+    - create user '유저명'@'localhost' identified by '비번';
+
+  - 유저에게 권한부여
+    - grant all privileges on 대상DB.* to '유저명'@'localhost';
+
+  - 권한 갱신
+    - flush privileges;
+
+  - 접속 (끊고 다시)
+    - quit;
+    - mysql -u 유저명 -p
+
+  - DB적용
+    - use DB명
+

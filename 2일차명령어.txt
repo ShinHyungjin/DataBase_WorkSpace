@@ -1,0 +1,229 @@
+SQL> --sys 계정은 최상위 권한자이므로 중요한 업무를 다룸
+SQL> --때문에 개발자가 사용할 일이 별로 없음
+SQL> --따라서 sys보다 하위 관리자계정인 system 계정을 사용하여 실습
+SQL> --다른계정으로 로그인을 전환하려면 connect 명령어 사용
+SQL> connect system/1234
+Connected.
+SQL> show user
+USER is "SYSTEM"
+SQL> --앞으로 테이블을 저장할 데이터베이스와 파일생성
+SQL> create tablespace study
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\study.dbf'
+  3  size 1m;
+
+Tablespace created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create user user0827
+  2  identified by user0827
+  3  default tablespace study
+  4* quota unlimited on study
+SQL> /
+
+User created.
+
+SQL> --유저가 생성되었으므로 이 유저로 로그인
+SQL> conn user0827/user0827
+ERROR:
+ORA-01045: user USER0827 lacks CREATE SESSION privilege; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> --생성된 유저는 아무런 권한이 없으므로 필요한 권한을 부여받아야함
+SQL> show user
+USER is ""
+SQL> conn sys/ as sysdba
+Connected.
+SQL> show user
+USER is "SYS"
+SQL> --사용자에게 권한주기
+SQL> grant create session to user0827
+  2  ;
+
+Grant succeeded.
+
+SQL> conn user0827/user0827
+Connected.
+SQL> show user
+USER is "USER0827"
+SQL> conn system/1234
+Connected.
+SQL> show user
+USER is "SYSTEM"
+SQL> conn sys/ as sysdba
+Connected.
+SQL> ed
+Wrote file afiedt.buf
+
+SP2-0223: No lines in SQL buffer.
+SQL> 
+SQL> alter user system identified by manager
+  2  ;
+
+User altered.
+
+SQL> conn system/manager
+Connected.
+SQL> show user
+USER is "SYSTEM"
+SQL> create tablespace web
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\web.dbf'
+  3  size 10m;
+
+Tablespace created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create user java
+  2  identified by 1234
+  3  default tablespace web
+  4* quota unlimited on web
+SQL> /
+
+User created.
+
+SQL> conn sys/ as sysdba
+Connected.
+SQL> grant create session to java;
+
+Grant succeeded.
+
+SQL> grant create table to java;
+
+Grant succeeded.
+
+SQL> conn java/1234
+Connected.
+SQL> show java
+SP2-0158: unknown SHOW option "java"
+SQL> show user
+USER is "JAVA"
+SQL> create table java_create(
+  2  name varchar(8) NOT NULL,
+  3  phone varchar(14) NOT NULL);
+
+Table created.
+
+SQL> insert into java_create values('신형진', '테스트연락처');
+insert into java_create values('신형진', '테스트연락처')
+                               *
+ERROR at line 1:
+ORA-12899: value too large for column "JAVA"."JAVA_CREATE"."NAME" (actual: 9,
+maximum: 8) 
+
+
+SQL> select * from java_create;
+
+no rows selected
+
+SQL> conn sys/ as sysdba
+Connected.
+SQL> grant insert table to java;
+grant insert table to java
+      *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege 
+
+
+SQL> grant insert to java;
+grant insert to java
+      *
+ERROR at line 1:
+ORA-01919: role 'INSERT' does not exist 
+
+
+SQL> grant insert on java_create to java;
+grant insert on java_create to java
+                *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> show user
+USER is "SYS"
+SQL> grant insert to java;
+grant insert to java
+      *
+ERROR at line 1:
+ORA-01919: role 'INSERT' does not exist 
+
+
+SQL> grant insert on java_create to java;
+grant insert on java_create to java
+                *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> grant insert on table to java;
+grant insert on table to java
+                *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> grant insert on member to java;
+
+Grant succeeded.
+
+SQL> grant insert on java_create to java;
+grant insert on java_create to java
+                *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> grant select on java_create to java;
+grant select on java_create to java
+                *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> conn java/1234
+Connected.
+SQL> insert into java_create values('sss', '1234');
+
+1 row created.
+
+SQL> insert into java_create values('신형진', '12345678');
+insert into java_create values('신형진', '12345678')
+                               *
+ERROR at line 1:
+ORA-12899: value too large for column "JAVA"."JAVA_CREATE"."NAME" (actual: 9,
+maximum: 8) 
+
+
+SQL> insert into java_create values('신형', '12345678');
+
+1 row created.
+
+SQL> select * from java_create;
+
+NAME             PHONE                                                          
+---------------- ----------------------------                                   
+sss              1234                                                           
+신형             12345678                                                       
+
+SQL> spool off
+
+
+
+ㅡㅡㅡㅡㅡ 2일차 요약 ㅡㅡㅡㅡㅡ
+
+DBF 파일 새성하기
+1. create tablespace study
+2. datafile 'C:\oraclexe\app\oracle\oradata\XE\study.dbf'
+3. size 1m;
+
+DB를 사용할 유저 생성
+1. create user java
+2. identified by 1234 
+3. default tablespace web
+4. quota unlimited on web
+
+권한부여
+grant create session, table ..
