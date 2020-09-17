@@ -1,0 +1,116 @@
+SQL> set size 300;
+SP2-0158: unknown SET option "size"
+SQL> set line 300;
+SQL> set pagesize 30;
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                     
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                     
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                     
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                     
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                     
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                     
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                     
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                     
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                     
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                     
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                     
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                     
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                     
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                     
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                     
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                     
+
+14 rows selected.
+
+SQL> select job, count(*)as 사원수 from emp group by job;
+
+JOB                    사원수                                                                                                                                                                                                                                                                               
+------------------ ----------                                                                                                                                                                                                                                                                               
+CLERK                       4                                                                                                                                                                                                                                                                               
+SALESMAN                    4                                                                                                                                                                                                                                                                               
+PRESIDENT                   1                                                                                                                                                                                                                                                                               
+MANAGER                     3                                                                                                                                                                                                                                                                               
+ANALYST                     2                                                                                                                                                                                                                                                                               
+
+SQL> --부서번호별 급여합, 평균 출력
+SQL> select sum(sal)as 총급여, avg(sal)as 급여평균 from emp group by deptno;
+
+    총급여   급여평균                                                                                                                                                                                                                                                                                       
+---------- ----------                                                                                                                                                                                                                                                                                       
+      9400 1566.66667                                                                                                                                                                                                                                                                                       
+     10875       2175                                                                                                                                                                                                                                                                                       
+      8750 2916.66667                                                                                                                                                                                                                                                                                       
+
+SQL> --업무별 급여합, 업무명 출력
+SQL> select sum(sal)as 총급여, job from emp group by job;
+
+    총급여 JOB                                                                                                                                                                                                                                                                                              
+---------- ------------------                                                                                                                                                                                                                                                                               
+      4150 CLERK                                                                                                                                                                                                                                                                                            
+      5600 SALESMAN                                                                                                                                                                                                                                                                                         
+      5000 PRESIDENT                                                                                                                                                                                                                                                                                        
+      8275 MANAGER                                                                                                                                                                                                                                                                                          
+      6000 ANALYST                                                                                                                                                                                                                                                                                          
+
+SQL> --부서번호별 급여평균, 부서명 출력
+SQL> --부서번호별 급여평균, 부서번호 출력
+SQL> select avg(sal)as 급여평균, deptno from emp group by deptno;
+
+  급여평균     DEPTNO                                                                                                                                                                                                                                                                                       
+---------- ----------                                                                                                                                                                                                                                                                                       
+1566.66667         30                                                                                                                                                                                                                                                                                       
+      2175         20                                                                                                                                                                                                                                                                                       
+2916.66667         10                                                                                                                                                                                                                                                                                       
+
+SQL> --Adms의 관리자가 소속된 부서의 급여합 출력
+SQL> select sum(sal)급여합 from emp where deptno = (select deptno from emp where empno = (select mgr from emp where ename = 'ADAMS'));
+
+    급여합                                                                                                                                                                                                                                                                                                  
+----------                                                                                                                                                                                                                                                                                                  
+     10875                                                                                                                                                                                                                                                                                                  
+
+SQL> select sum(sal)  from emp group by deptno where deptno = 20;
+select sum(sal)  from emp group by deptno where deptno = 20
+                                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select sum(sal)  from emp group by deptno;
+
+  SUM(SAL)                                                                                                                                                                                                                                                                                                  
+----------                                                                                                                                                                                                                                                                                                  
+      9400                                                                                                                                                                                                                                                                                                  
+     10875                                                                                                                                                                                                                                                                                                  
+      8750                                                                                                                                                                                                                                                                                                  
+
+SQL> select sum(sal), deptno  from emp group by deptno;
+
+  SUM(SAL)     DEPTNO                                                                                                                                                                                                                                                                                       
+---------- ----------                                                                                                                                                                                                                                                                                       
+      9400         30                                                                                                                                                                                                                                                                                       
+     10875         20                                                                                                                                                                                                                                                                                       
+      8750         10                                                                                                                                                                                                                                                                                       
+
+SQL> spool off;
+
+-------------------------------------------------
+오라클의 SQLPlus 툴에는 대량의 데이터를 읽는 기능이 있음
+컨트롤 파일확장자가 ctl
+
+-- animal.ctl --
+
+load data
+infile 'animal.csv'
+insert into table animal
+fields terminated by ','
+(code, category, name, location)
+
+-- cmd --
+
+cd D:\IT_Korea_Class\DB\Oracle\dump
+d:
+
+SQLLDR user0827/user0827 control='animal.ctl' data='animal.csv'
+

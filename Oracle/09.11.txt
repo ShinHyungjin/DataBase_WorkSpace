@@ -1,0 +1,471 @@
+SQL> create table member
+  2  as
+  3  select ename, sal, hiredate, deptno from emp;
+
+Table created.
+
+SQL> select * from member;
+
+ENAME                       SAL HIREDATE     DEPTNO                             
+-------------------- ---------- -------- ----------                             
+SMITH                       800 80/12/17         20                             
+ALLEN                      1600 81/02/20         30                             
+WARD                       1250 81/02/22         30                             
+JONES                      2975 81/04/02         20                             
+MARTIN                     1250 81/09/28         30                             
+BLAKE                      2850 81/05/01         30                             
+CLARK                      2450 81/06/09         10                             
+SCOTT                      3000 87/04/19         20                             
+KING                       5000 81/11/17         10                             
+TURNER                     1500 81/09/08         30                             
+ADAMS                      1100 87/05/23         20                             
+
+ENAME                       SAL HIREDATE     DEPTNO                             
+-------------------- ---------- -------- ----------                             
+JAMES                       950 81/12/03         30                             
+FORD                       3000 81/12/03         20                             
+MILLER                     1300 82/01/23         10                             
+
+14 rows selected.
+
+SQL> set line 300;
+SQL> set pagesize 30;
+SQL> delete from member where ename='BLAKE';
+
+1 row deleted.
+
+SQL> select * from member;
+
+ENAME                       SAL HIREDATE     DEPTNO                                                                                                                                                                                                                                                         
+-------------------- ---------- -------- ----------                                                                                                                                                                                                                                                         
+SMITH                       800 80/12/17         20                                                                                                                                                                                                                                                         
+ALLEN                      1600 81/02/20         30                                                                                                                                                                                                                                                         
+WARD                       1250 81/02/22         30                                                                                                                                                                                                                                                         
+JONES                      2975 81/04/02         20                                                                                                                                                                                                                                                         
+MARTIN                     1250 81/09/28         30                                                                                                                                                                                                                                                         
+CLARK                      2450 81/06/09         10                                                                                                                                                                                                                                                         
+SCOTT                      3000 87/04/19         20                                                                                                                                                                                                                                                         
+KING                       5000 81/11/17         10                                                                                                                                                                                                                                                         
+TURNER                     1500 81/09/08         30                                                                                                                                                                                                                                                         
+ADAMS                      1100 87/05/23         20                                                                                                                                                                                                                                                         
+JAMES                       950 81/12/03         30                                                                                                                                                                                                                                                         
+FORD                       3000 81/12/03         20                                                                                                                                                                                                                                                         
+MILLER                     1300 82/01/23         10                                                                                                                                                                                                                                                         
+
+13 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> alter table member
+  2  drop column ename;
+
+Table altered.
+
+SQL> select * from member;
+
+       SAL HIREDATE     DEPTNO                                                                                                                                                                                                                                                                              
+---------- -------- ----------                                                                                                                                                                                                                                                                              
+       800 80/12/17         20                                                                                                                                                                                                                                                                              
+      1600 81/02/20         30                                                                                                                                                                                                                                                                              
+      1250 81/02/22         30                                                                                                                                                                                                                                                                              
+      2975 81/04/02         20                                                                                                                                                                                                                                                                              
+      1250 81/09/28         30                                                                                                                                                                                                                                                                              
+      2450 81/06/09         10                                                                                                                                                                                                                                                                              
+      3000 87/04/19         20                                                                                                                                                                                                                                                                              
+      5000 81/11/17         10                                                                                                                                                                                                                                                                              
+      1500 81/09/08         30                                                                                                                                                                                                                                                                              
+      1100 87/05/23         20                                                                                                                                                                                                                                                                              
+       950 81/12/03         30                                                                                                                                                                                                                                                                              
+      3000 81/12/03         20                                                                                                                                                                                                                                                                              
+      1300 82/01/23         10                                                                                                                                                                                                                                                                              
+
+13 rows selected.
+
+SQL> delete from member where sal=2450;
+
+1 row deleted.
+
+SQL> select * from member;
+
+       SAL HIREDATE     DEPTNO                                                                                                                                                                                                                                                                              
+---------- -------- ----------                                                                                                                                                                                                                                                                              
+       800 80/12/17         20                                                                                                                                                                                                                                                                              
+      1600 81/02/20         30                                                                                                                                                                                                                                                                              
+      1250 81/02/22         30                                                                                                                                                                                                                                                                              
+      2975 81/04/02         20                                                                                                                                                                                                                                                                              
+      1250 81/09/28         30                                                                                                                                                                                                                                                                              
+      3000 87/04/19         20                                                                                                                                                                                                                                                                              
+      5000 81/11/17         10                                                                                                                                                                                                                                                                              
+      1500 81/09/08         30                                                                                                                                                                                                                                                                              
+      1100 87/05/23         20                                                                                                                                                                                                                                                                              
+       950 81/12/03         30                                                                                                                                                                                                                                                                              
+      3000 81/12/03         20                                                                                                                                                                                                                                                                              
+      1300 82/01/23         10                                                                                                                                                                                                                                                                              
+
+12 rows selected.
+
+SQL> alter table member
+  2  drop column sal;
+
+Table altered.
+
+SQL> select * from member;
+
+HIREDATE     DEPTNO                                                                                                                                                                                                                                                                                         
+-------- ----------                                                                                                                                                                                                                                                                                         
+80/12/17         20                                                                                                                                                                                                                                                                                         
+81/02/20         30                                                                                                                                                                                                                                                                                         
+81/02/22         30                                                                                                                                                                                                                                                                                         
+81/04/02         20                                                                                                                                                                                                                                                                                         
+81/09/28         30                                                                                                                                                                                                                                                                                         
+87/04/19         20                                                                                                                                                                                                                                                                                         
+81/11/17         10                                                                                                                                                                                                                                                                                         
+81/09/08         30                                                                                                                                                                                                                                                                                         
+87/05/23         20                                                                                                                                                                                                                                                                                         
+81/12/03         30                                                                                                                                                                                                                                                                                         
+81/12/03         20                                                                                                                                                                                                                                                                                         
+82/01/23         10                                                                                                                                                                                                                                                                                         
+
+12 rows selected.
+
+SQL> delete from member whrer hiredate='80/12/17';
+delete from member whrer hiredate='80/12/17'
+                         *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> delete from member where hiredate='80/12/17';
+
+1 row deleted.
+
+SQL> alter table member
+  2  drop column hiredate;
+
+Table altered.
+
+SQL> select * from member;
+
+    DEPTNO                                                                                                                                                                                                                                                                                                  
+----------                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        10                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        10                                                                                                                                                                                                                                                                                                  
+
+11 rows selected.
+
+SQL> --테이블 정의시 데이터이 결점을 두지 않기 위해 무결성 검증을 해야함
+SQL> --무결정검증 = 많은 제약사항
+SQL> drop table member;
+
+Table dropped.
+
+SQL> create table member (
+  2  ename varchar(20) NOT NULL,
+  3  ;
+
+*
+ERROR at line 3:
+ORA-00904: : invalid identifier 
+
+
+SQL> create table member (
+  2  name varchar(20)
+  3  , age number);
+
+Table created.
+
+SQL> --테이블 구조 확이
+SQL> --테이블 구조 확인
+SQL> desc member;
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ NAME                                                                                                                                                                                   VARCHAR2(20)
+ AGE                                                                                                                                                                                    NUMBER
+
+SQL> insert  into member values('배트맨', 36);
+
+1 row created.
+
+SQL> select * from member;
+
+NAME                                            AGE                                                                                                                                                                                                                                                         
+---------------------------------------- ----------                                                                                                                                                                                                                                                         
+배트맨                                           36                                                                                                                                                                                                                                                         
+
+SQL> insert  into member values('앤트맨', 40);
+
+1 row created.
+
+SQL> select * from member;
+
+NAME                                            AGE                                                                                                                                                                                                                                                         
+---------------------------------------- ----------                                                                                                                                                                                                                                                         
+배트맨                                           36                                                                                                                                                                                                                                                         
+앤트맨                                           40                                                                                                                                                                                                                                                         
+
+SQL> drop table member;
+
+Table dropped.
+
+SQL> create table member (
+  2  member_idx number uniqu,
+  3  name varchar(20),
+  4  age number);
+member_idx number uniqu,
+                  *
+ERROR at line 2:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table member (
+  2  member_idx number unique,
+  3  name varchar(20),
+  4  age number);
+
+Table created.
+
+SQL> insert into member valuese(1, '배트맨', 36);
+insert into member valuese(1, '배트맨', 36)
+                           *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword 
+
+
+SQL> insert into member values(1, '배트맨', 36);
+
+1 row created.
+
+SQL> select * from member;
+
+MEMBER_IDX NAME                                            AGE                                                                                                                                                                                                                                              
+---------- ---------------------------------------- ----------                                                                                                                                                                                                                                              
+         1 배트맨                                           36                                                                                                                                                                                                                                              
+
+SQL> insert into member values(2, '슈퍼맨', 39);
+
+1 row created.
+
+SQL> insert into member values(2, '엑스맨', 39);
+insert into member values(2, '엑스맨', 39)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (USER0827.SYS_C007003) violated 
+
+
+SQL> insert into member values(3, '엑스맨', 39);
+
+1 row created.
+
+SQL> insert into member values(4, '배트맨', 28);
+
+1 row created.
+
+SQL> select * from member;
+
+MEMBER_IDX NAME                                            AGE                                                                                                                                                                                                                                              
+---------- ---------------------------------------- ----------                                                                                                                                                                                                                                              
+         1 배트맨                                           36                                                                                                                                                                                                                                              
+         2 슈퍼맨                                           39                                                                                                                                                                                                                                              
+         3 엑스맨                                           39                                                                                                                                                                                                                                              
+         4 배트맨                                           28                                                                                                                                                                                                                                              
+
+SQL> insert into member values(, '널맨', 28);
+insert into member values(, '널맨', 28)
+                          *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> insert into member values( '널맨', 28);
+insert into member values( '널맨', 28)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> insert into member values('널맨', 28);
+insert into member values('널맨', 28)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> insert into member(name, age) values ('배트맨', 48);
+
+1 row created.
+
+SQL> select * from member;
+
+MEMBER_IDX NAME                                            AGE                                                                                                                                                                                                                                              
+---------- ---------------------------------------- ----------                                                                                                                                                                                                                                              
+         1 배트맨                                           36                                                                                                                                                                                                                                              
+         2 슈퍼맨                                           39                                                                                                                                                                                                                                              
+         3 엑스맨                                           39                                                                                                                                                                                                                                              
+         4 배트맨                                           28                                                                                                                                                                                                                                              
+           배트맨                                           48                                                                                                                                                                                                                                              
+
+SQL> --null 삽입을 위해선 insert into 테이블() 을 이용해야함
+SQL> drop table member;
+
+Table dropped.
+
+SQL> create table memeber (
+  2  member_idx number unique NOT NULL,
+  3  name varchar(20)
+  4  , age number);
+
+Table created.
+
+SQL> insert into member values(1, '배트맨', 36);
+insert into member values(1, '배트맨', 36)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into member values(1, '배트맨', 36);
+insert into member values(1, '배트맨', 36)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into memeber values(1, '배트맨', 36);
+
+1 row created.
+
+SQL> insert into memeber values(2, '배트맨', 36);
+
+1 row created.
+
+SQL> selelct * from memeber;
+SP2-0734: unknown command beginning "selelct * ..." - rest of line ignored.
+SQL> -- 제약조건중 unique와 not null을 합쳐놓은 제약조건을 지원한다
+SQL> drop table memeber;
+
+Table dropped.
+
+SQL> create table member(
+  2  member_idx number primary key
+  3  , name varchar(20)
+  4  , age number
+  5  )
+  6  ;
+
+Table created.
+
+SQL> desc member;
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ MEMBER_IDX                                                                                                                                                                    NOT NULL NUMBER
+ NAME                                                                                                                                                                                   VARCHAR2(20)
+ AGE                                                                                                                                                                                    NUMBER
+
+SQL> --제약조건 종류 : unique, not null, primary key, default, check(값의 범위 제한), foreign key(조인된 테이블 참조)
+SQL> drop table member;
+
+Table dropped.
+
+SQL> create table member(
+  2  member_idx number primary key
+  3  , name varchar(20)
+  4  , age number
+  5  , regdate date default sysdate
+  6  , point number default 500);
+
+Table created.
+
+SQL> insert into member values(1, '배트맨', 37);
+insert into member values(1, '배트맨', 37)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> insert into member(memeber_idx, name, age) values(1, '배트맨', 37);
+insert into member(memeber_idx, name, age) values(1, '배트맨', 37)
+                   *
+ERROR at line 1:
+ORA-00904: "MEMEBER_IDX": invalid identifier 
+
+
+SQL> insert into member(member_idx, name, age) values(1, '배트맨', 37);
+
+1 row created.
+
+SQL> set line 500;
+SQL> select * from member;
+
+MEMBER_IDX NAME                                            AGE REGDATE       POINT                                                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ---------------------------------------- ---------- -------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                  
+         1 배트맨                                           37 20/09/11        500                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> select sysdate from dual;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+--------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+20/09/11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> --dual : 컬럼이 한개, 데이터가 한개 들어있는 더미 테이블
+SQL> select '신형진' from dual;
+
+'신형진'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+신형진                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+SQL> create table babo(
+  2  boo varchar(2));
+
+Table created.
+
+SQL> insert into babo(boo) values('X');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> --체크 제약조건 : member테이블에 성별컬럼을 추가하자
+SQL> alter table member
+  2  add gender varchar(4) check(gender='남');
+
+Table altered.
+
+SQL> insert into member(member_idx, name, age, gender) values(10, '시더', 24, '여');
+insert into member(member_idx, name, age, gender) values(10, '시더', 24, '여')
+*
+ERROR at line 1:
+ORA-02290: check constraint (USER0827.SYS_C007008) violated 
+
+
+SQL> insert into member(member_idx, name, age, gender) values(10, '시더', 24, '남');
+
+1 row created.
+
+SQL> select * frmo member;
+select * frmo member
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select * from member;
+
+MEMBER_IDX NAME                                            AGE REGDATE       POINT GENDER                                                                                                                                                                                                                                                                                                                                                                                                                           
+---------- ---------------------------------------- ---------- -------- ---------- --------                                                                                                                                                                                                                                                                                                                                                                                                                         
+         1 배트맨                                           37 20/09/11        500                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        10 시더                                             24 20/09/11        500 남                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+SQL> spool off;

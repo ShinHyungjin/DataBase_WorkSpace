@@ -1,0 +1,15 @@
+select ename, sal from emp where sal<=2000;
+
+select ename, sal, mgr from emp where ename like '%A%';
+
+select ename, job, deptno from emp where ename like '%T';
+
+select ename, sal, comm from emp where comm=0;
+
+select ename, sal, comm from emp where comm is null;
+
+select ename, hiredate from emp where hiredate <=(select hiredate from emp);
+
+select count(*)as 사원총수, sum(sal)as 총급여, avg(sal)as 평균급여, max(sal)as 최대급여, min(sal)as 최소급여 from emp;
+
+select ename, hiredate from emp order by sal ASC where deptno=(select deptno from emp);

@@ -1,0 +1,131 @@
+SQL> --sys계정 비밀번호 변경
+SQL> alter user sys identified by 1234;
+
+User altered.
+
+SQL> --현재 접속유저명 확인
+SQL> show user;
+USER is "SYS"
+SQL> --테이블 스페이스 생성
+SQL> create tablespace space0907_2
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\space0907_2.dbf'
+  3  size 2m;
+
+Tablespace created.
+
+SQL> --유저 생성
+SQL> create user user0907_2
+  2  identified by 1234
+  3  default tablespace space0907_2
+  4  quota unlimited on space0907_2
+  5  ;
+
+User created.
+
+SQL> --유저 권한부여
+SQL> grant create session, table to user0907_2;
+grant create session, table to user0907_2
+                      *
+ERROR at line 1:
+ORA-01919: role 'TABLE' does not exist 
+
+
+SQL> grant create session to user0907_2;
+
+Grant succeeded.
+
+SQL> grant create table to user0907_2;
+
+Grant succeeded.
+
+SQL> --유저접속 및 테이블생성
+SQL> conn user0907_2/1234
+Connected.
+SQL> create table member(
+  2  name varchar(20),
+  3  age number,
+  4  birth date);
+
+Table created.
+
+SQL> --테이블에 데이터 삽입
+SQL> insert into member values('노홍철', 30, '1989-09-01');
+
+1 row created.
+
+SQL> insert into member valuse('박나래', 27, '1986-07-15');
+insert into member valuse('박나래', 27, '1986-07-15')
+                          *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword 
+
+
+SQL> insert into member values('박나래', 27, '1986-07-15');
+
+1 row created.
+
+SQL> --데이터 조회
+SQL> select * from member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+노홍철                                           30 89/09/01                    
+박나래                                           27 86/07/15                    
+
+SQL> select * from member where name='노홍철;
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> select * from member where name='노홍철';
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+노홍철                                           30 89/09/01                    
+
+SQL> --데이터 변경
+SQL> update member set name='홍철' where name='노홍철';
+
+1 row updated.
+
+SQL> select * from member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+홍철                                             30 89/09/01                    
+박나래                                           27 86/07/15                    
+
+SQL> delete from member where name='박나래';
+
+1 row deleted.
+
+SQL> select * from member;
+
+NAME                                            AGE BIRTH                       
+---------------------------------------- ---------- --------                    
+홍철                                             30 89/09/01                    
+
+SQL> --테이블 제거
+SQL> drop table member;
+
+Table dropped.
+
+SQL> select * from member;
+select * from member
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> --4일차 Oracle 실습 종료
+SQL> spool off;
+
+ㅡㅡㅡㅡㅡ 4일차 요약 ㅡㅡㅡㅡㅡ
+1. sys 계정 비밀번호 변경
+   alter user sys identified by 1234;
+
+2. user 생성 후 정보변경
+   alter user user0907 을 이용하여 비번, 적용 tablespace 등을 지정..
+
+3. 컬럼제거
+   alter table member drop column age;

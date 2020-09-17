@@ -1,0 +1,247 @@
+SQL> -- 외래키
+SQL> create table category(
+  2  category_id number primary key,
+  3  name varchar(20));
+
+Table created.
+
+SQL> desc category;
+ Name                                                                                                                                                                          Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --------------------------------------------------------------------------------------------------------------------
+ CATEGORY_ID                                                                                                                                                                   NOT NULL NUMBER
+ NAME                                                                                                                                                                                   VARCHAR2(20)
+
+SQL> insert into category values(1,'상의');
+
+1 row created.
+
+SQL> insert into category values(2,'하의');
+
+1 row created.
+
+SQL> insert into category values(3,'액세서리');
+
+1 row created.
+
+SQL> insert into category values(4,'신발');
+
+1 row created.
+
+SQL> cretate table product(
+SP2-0734: unknown command beginning "cretate ta..." - rest of line ignored.
+SQL> product_id number primary key,
+SP2-0734: unknown command beginning "product_id..." - rest of line ignored.
+SQL> cretate table product(
+SP2-0734: unknown command beginning "cretate ta..." - rest of line ignored.
+SQL> create table product(
+  2  product_id number primary key,
+  3  category_id number,
+  4  code varchar(20),
+  5  product_name varchar(20),
+  6  price numver default 0);
+price numver default 0)
+      *
+ERROR at line 6:
+ORA-00902: invalid datatype 
+
+
+SQL> create table product(
+  2  product_id number primary key,
+  3  category_id number,
+  4  foreign key (category_id) references category(category_id),
+  5  code varchar(20),
+  6  product_name varchar(20),
+  7  price number default 0);
+
+Table created.
+
+SQL> insert into product values(1, 1, 'JE5505', 'Metro청바지', 250000);
+
+1 row created.
+
+SQL> insert into product values(1,sdad 1, 'JE5505', 'Metro청바지', 250000);
+insert into product values(1,sdad 1, 'JE5505', 'Metro청바지', 250000)
+                                  *
+ERROR at line 1:
+ORA-00917: missing comma 
+
+
+SQL> insert into product values(2, 1, 'JE5506', '스키니청바지', 270000);
+
+1 row created.
+
+SQL> select * from product;
+
+PRODUCT_ID CATEGORY_ID CODE                                     PRODUCT_NAME                                  PRICE                                                                                                                                                                                         
+---------- ----------- ---------------------------------------- ---------------------------------------- ----------                                                                                                                                                                                         
+         1           1 JE5505                                   Metro청바지                                  250000                                                                                                                                                                                         
+         2           1 JE5506                                   스키니청바지                                 270000                                                                                                                                                                                         
+
+SQL> update category set category_id=100;
+update category set category_id=100
+*
+ERROR at line 1:
+ORA-00001: unique constraint (USER0827.SYS_C007009) violated 
+
+
+SQL> alter table category drop column category_id;
+alter table category drop column category_id
+                                 *
+ERROR at line 1:
+ORA-12992: cannot drop parent key column 
+
+
+SQL> -- 외래키 제약조건을걸어놓으면 데이터 무결성 유지
+SQL> -- unique, not null, primary key, check, default, foreign key
+SQL> create sequence seq_category
+  2  increment by 1
+  3  start with 1
+  4  ;
+create sequence seq_category
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> conn system/1234
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> conn sys/ as sysdba
+Connected.
+SQL> grant create sequence to user0827;
+
+Grant succeeded.
+
+SQL> conn user0827/user0827;
+Connected.
+SQL> create sequence seq_category
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> --시퀀스 호출
+SQL> --기존 카테고리 데이터 삭제
+SQL> delete table category;
+delete table category
+       *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> delete from category;
+delete from category
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (USER0827.SYS_C007011) violated - child record found 
+
+
+SQL> create sequence seq_product
+  2  increment 1
+  3  start with 1;
+increment 1
+          *
+ERROR at line 2:
+ORA-00924: missing BY keyword 
+
+
+SQL> create sequence  seq_product
+  2  increment by 1
+  3  start with
+  4  ;
+
+*
+ERROR at line 4:
+ORA-01722: invalid number 
+
+
+SQL> create sequence  seq_product
+  2  increment by 1
+  3  start with
+  4  
+SQL> create sequence  seq_product
+  2  increment by 1
+  3  start with
+  4  1;
+
+Sequence created.
+
+SQL> --기존 테스트 product의 category_id 값을 지우자
+SQL> delete from product;
+
+2 rows deleted.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> insert into product values(seq_product.nextval, 1, 'JE0007', '스키니청바지', 30000);
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> select * from product;
+
+PRODUCT_ID CATEGORY_ID CODE                                     PRODUCT_NAME                                  PRICE                                                                                                                                                                                         
+---------- ----------- ---------------------------------------- ---------------------------------------- ----------                                                                                                                                                                                         
+         1           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         2           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         3           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         4           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         5           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         6           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         7           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         8           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+         9           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+        10           1 JE0007                                   스키니청바지                                  30000                                                                                                                                                                                         
+
+10 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;

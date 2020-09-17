@@ -9,8 +9,10 @@ DB 파일
   - sql 최고권한자 접속 : sqlplus sys/ as sysdba (비번입력 안해도 됨)
                                 sys/ as sysdba (비번입력 안해도 됨)
   - sql 연결재요청 : connect sys/ as sysdba
-  - SQLPlus 에서 콘솔화면 캡쳐기능 : spool '파일명'
+  - SQLPlus 에서 콘솔화면 캡쳐기능 : spool '위치\파일명.txt'
                                   캡쳐종료 : spool off
+
+  - sys 관리자 계정 비밀번호 변경 : sys접속 후, alter user sys identified by 1234;
 
   - Mysql / Maria.db
 
