@@ -1,0 +1,192 @@
+SQL> --abs(n) : 인수로 전달된 n에 대한 절대값 반환
+SQL> --dual : 컬럼1개와 레코드 1개로 이루어진 의미없는 더미 테이블
+SQL> desc dual;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> select * from dual;
+
+DU                                                                              
+--                                                                              
+X                                                                               
+
+SQL> --ceil(n) : 실수 n보다 큰 정수
+SQL> --floor(n) : 실수 n보다 작은 정수
+SQL> select ceil(2.2) from dual;
+
+ CEIL(2.2)                                                                      
+----------                                                                      
+         3                                                                      
+
+SQL> --mod(a,b) : a를 b로 나눈 나머지를 반환
+SQL> select mod(5,3) from dual;
+
+  MOD(5,3)                                                                      
+----------                                                                      
+         2                                                                      
+
+SQL> --변환함수 : to_char - 문자 or 날짜 원하는 형식
+SQL> set line 300;
+SQL> set pagesize 50;
+SQL> select hiredate from emp;
+
+HIREDATE                                                                                                                                                                                                                                                                                                    
+--------                                                                                                                                                                                                                                                                                                    
+80/12/17                                                                                                                                                                                                                                                                                                    
+81/02/20                                                                                                                                                                                                                                                                                                    
+81/02/22                                                                                                                                                                                                                                                                                                    
+81/04/02                                                                                                                                                                                                                                                                                                    
+81/09/28                                                                                                                                                                                                                                                                                                    
+81/05/01                                                                                                                                                                                                                                                                                                    
+81/06/09                                                                                                                                                                                                                                                                                                    
+87/04/19                                                                                                                                                                                                                                                                                                    
+81/11/17                                                                                                                                                                                                                                                                                                    
+81/09/08                                                                                                                                                                                                                                                                                                    
+87/05/23                                                                                                                                                                                                                                                                                                    
+81/12/03                                                                                                                                                                                                                                                                                                    
+81/12/03                                                                                                                                                                                                                                                                                                    
+82/01/23                                                                                                                                                                                                                                                                                                    
+
+14 rows selected.
+
+SQL> select to_char(hiredate, 'yyyy-mm-dd') from emp;
+
+TO_CHAR(HIREDATE,'YY                                                                                                                                                                                                                                                                                        
+--------------------                                                                                                                                                                                                                                                                                        
+1980-12-17                                                                                                                                                                                                                                                                                                  
+1981-02-20                                                                                                                                                                                                                                                                                                  
+1981-02-22                                                                                                                                                                                                                                                                                                  
+1981-04-02                                                                                                                                                                                                                                                                                                  
+1981-09-28                                                                                                                                                                                                                                                                                                  
+1981-05-01                                                                                                                                                                                                                                                                                                  
+1981-06-09                                                                                                                                                                                                                                                                                                  
+1987-04-19                                                                                                                                                                                                                                                                                                  
+1981-11-17                                                                                                                                                                                                                                                                                                  
+1981-09-08                                                                                                                                                                                                                                                                                                  
+1987-05-23                                                                                                                                                                                                                                                                                                  
+1981-12-03                                                                                                                                                                                                                                                                                                  
+1981-12-03                                                                                                                                                                                                                                                                                                  
+1982-01-23                                                                                                                                                                                                                                                                                                  
+
+14 rows selected.
+
+SQL> --to_number(data, 원하는형식)
+SQL> --to_date(날짜형문자, 원하는형식)
+SQL> --문자관련함수 : lower, upper ..
+SQL> select lower(ename) from emp;
+
+LOWER(ENAME)                                                                                                                                                                                                                                                                                                
+--------------------                                                                                                                                                                                                                                                                                        
+smith                                                                                                                                                                                                                                                                                                       
+allen                                                                                                                                                                                                                                                                                                       
+ward                                                                                                                                                                                                                                                                                                        
+jones                                                                                                                                                                                                                                                                                                       
+martin                                                                                                                                                                                                                                                                                                      
+blake                                                                                                                                                                                                                                                                                                       
+clark                                                                                                                                                                                                                                                                                                       
+scott                                                                                                                                                                                                                                                                                                       
+king                                                                                                                                                                                                                                                                                                        
+turner                                                                                                                                                                                                                                                                                                      
+adams                                                                                                                                                                                                                                                                                                       
+james                                                                                                                                                                                                                                                                                                       
+ford                                                                                                                                                                                                                                                                                                        
+miller                                                                                                                                                                                                                                                                                                      
+
+14 rows selected.
+
+SQL> --concat : (원하는문자1, 문자 , 원하는문자2 ....)
+SQL> selelct concat((concat'내이름은', ename),
+SP2-0734: unknown command beginning "selelct co..." - rest of line ignored.
+SQL> selelct concat((concat'내이름은', ename),'입니다');
+SP2-0734: unknown command beginning "selelct co..." - rest of line ignored.
+SQL> selelct concat((concat'내이름은', ename),'입니다') from emp;
+SP2-0734: unknown command beginning "selelct co..." - rest of line ignored.
+SQL> select concat((concat'내이름은', ename),'입니다') from emp;
+select concat((concat'내이름은', ename),'입니다') from emp
+                     *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> select concat(concat'내이름은', ename),'입니다') from emp;
+select concat(concat'내이름은', ename),'입니다') from emp
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> select concat(concat('내이름은', ename),'입니다') from emp;
+
+CONCAT(CONCAT('내이름은',ENAME),'입니다')                                                                                                                                                                                                                                                                   
+--------------------------------------------------------------                                                                                                                                                                                                                                              
+내이름은SMITH입니다                                                                                                                                                                                                                                                                                         
+내이름은ALLEN입니다                                                                                                                                                                                                                                                                                         
+내이름은WARD입니다                                                                                                                                                                                                                                                                                          
+내이름은JONES입니다                                                                                                                                                                                                                                                                                         
+내이름은MARTIN입니다                                                                                                                                                                                                                                                                                        
+내이름은BLAKE입니다                                                                                                                                                                                                                                                                                         
+내이름은CLARK입니다                                                                                                                                                                                                                                                                                         
+내이름은SCOTT입니다                                                                                                                                                                                                                                                                                         
+내이름은KING입니다                                                                                                                                                                                                                                                                                          
+내이름은TURNER입니다                                                                                                                                                                                                                                                                                        
+내이름은ADAMS입니다                                                                                                                                                                                                                                                                                         
+내이름은JAMES입니다                                                                                                                                                                                                                                                                                         
+내이름은FORD입니다                                                                                                                                                                                                                                                                                          
+내이름은MILLER입니다                                                                                                                                                                                                                                                                                        
+
+14 rows selected.
+
+SQL> --concat : (원하는문자1, 문자)
+SQL> 
+SQL> --substr (대상문자열, 시작인덱스, 가져올길이)
+SQL> select substr(ename, 2, 2) from emp;
+
+SUBSTR(ENAME,2,2                                                                                                                                                                                                                                                                                            
+----------------                                                                                                                                                                                                                                                                                            
+MI                                                                                                                                                                                                                                                                                                          
+LL                                                                                                                                                                                                                                                                                                          
+AR                                                                                                                                                                                                                                                                                                          
+ON                                                                                                                                                                                                                                                                                                          
+AR                                                                                                                                                                                                                                                                                                          
+LA                                                                                                                                                                                                                                                                                                          
+LA                                                                                                                                                                                                                                                                                                          
+CO                                                                                                                                                                                                                                                                                                          
+IN                                                                                                                                                                                                                                                                                                          
+UR                                                                                                                                                                                                                                                                                                          
+DA                                                                                                                                                                                                                                                                                                          
+AM                                                                                                                                                                                                                                                                                                          
+OR                                                                                                                                                                                                                                                                                                          
+IL                                                                                                                                                                                                                                                                                                          
+
+14 rows selected.
+
+SQL> select substr(ename, len(ename)-2, 2) from emp;
+select substr(ename, len(ename)-2, 2) from emp
+                     *
+ERROR at line 1:
+ORA-00904: "LEN": invalid identifier 
+
+
+SQL> select substr(ename, length(ename)-2, 2) from emp;
+
+SUBSTR(ENAME,LEN                                                                                                                                                                                                                                                                                            
+----------------                                                                                                                                                                                                                                                                                            
+IT                                                                                                                                                                                                                                                                                                          
+LE                                                                                                                                                                                                                                                                                                          
+AR                                                                                                                                                                                                                                                                                                          
+NE                                                                                                                                                                                                                                                                                                          
+TI                                                                                                                                                                                                                                                                                                          
+AK                                                                                                                                                                                                                                                                                                          
+AR                                                                                                                                                                                                                                                                                                          
+OT                                                                                                                                                                                                                                                                                                          
+IN                                                                                                                                                                                                                                                                                                          
+NE                                                                                                                                                                                                                                                                                                          
+AM                                                                                                                                                                                                                                                                                                          
+ME                                                                                                                                                                                                                                                                                                          
+OR                                                                                                                                                                                                                                                                                                          
+LE                                                                                                                                                                                                                                                                                                          
+
+14 rows selected.
+
+SQL> spool off;
