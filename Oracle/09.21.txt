@@ -1,0 +1,87 @@
+SQL> set line 300;
+SQL> set pagesize 30;
+SQL> select empno, ename from emp where mod(empno,2)!= 0;
+
+     EMPNO ENAME                                                                                                                                                                                                                                                                                            
+---------- --------------------                                                                                                                                                                                                                                                                             
+      7369 SMITH                                                                                                                                                                                                                                                                                            
+      7499 ALLEN                                                                                                                                                                                                                                                                                            
+      7521 WARD                                                                                                                                                                                                                                                                                             
+      7839 KING                                                                                                                                                                                                                                                                                             
+
+SQL> select concat(concat('job'업무담당 '),ename) from emp;
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> select concat(concat(job, '업무담당 '),ename) from emp;
+
+CONCAT(CONCAT(JOB,'업무담당'),ENAME)                                                                                                                                                                                                                                                                        
+----------------------------------------------------------------                                                                                                                                                                                                                                            
+CLERK업무담당 SMITH                                                                                                                                                                                                                                                                                         
+SALESMAN업무담당 ALLEN                                                                                                                                                                                                                                                                                      
+SALESMAN업무담당 WARD                                                                                                                                                                                                                                                                                       
+MANAGER업무담당 JONES                                                                                                                                                                                                                                                                                       
+SALESMAN업무담당 MARTIN                                                                                                                                                                                                                                                                                     
+MANAGER업무담당 BLAKE                                                                                                                                                                                                                                                                                       
+MANAGER업무담당 CLARK                                                                                                                                                                                                                                                                                       
+ANALYST업무담당 SCOTT                                                                                                                                                                                                                                                                                       
+PRESIDENT업무담당 KING                                                                                                                                                                                                                                                                                      
+SALESMAN업무담당 TURNER                                                                                                                                                                                                                                                                                     
+CLERK업무담당 ADAMS                                                                                                                                                                                                                                                                                         
+CLERK업무담당 JAMES                                                                                                                                                                                                                                                                                         
+ANALYST업무담당 FORD                                                                                                                                                                                                                                                                                        
+CLERK업무담당 MILLER                                                                                                                                                                                                                                                                                        
+
+14 rows selected.
+
+SQL> select concat(concat(job, ' 업무담당 '),ename) from emp;
+
+CONCAT(CONCAT(JOB,'업무담당'),ENAME)                                                                                                                                                                                                                                                                        
+------------------------------------------------------------------                                                                                                                                                                                                                                          
+CLERK 업무담당 SMITH                                                                                                                                                                                                                                                                                        
+SALESMAN 업무담당 ALLEN                                                                                                                                                                                                                                                                                     
+SALESMAN 업무담당 WARD                                                                                                                                                                                                                                                                                      
+MANAGER 업무담당 JONES                                                                                                                                                                                                                                                                                      
+SALESMAN 업무담당 MARTIN                                                                                                                                                                                                                                                                                    
+MANAGER 업무담당 BLAKE                                                                                                                                                                                                                                                                                      
+MANAGER 업무담당 CLARK                                                                                                                                                                                                                                                                                      
+ANALYST 업무담당 SCOTT                                                                                                                                                                                                                                                                                      
+PRESIDENT 업무담당 KING                                                                                                                                                                                                                                                                                     
+SALESMAN 업무담당 TURNER                                                                                                                                                                                                                                                                                    
+CLERK 업무담당 ADAMS                                                                                                                                                                                                                                                                                        
+CLERK 업무담당 JAMES                                                                                                                                                                                                                                                                                        
+ANALYST 업무담당 FORD                                                                                                                                                                                                                                                                                       
+CLERK 업무담당 MILLER                                                                                                                                                                                                                                                                                       
+
+14 rows selected.
+
+SQL> select ename, hiredate from emp where to_char(hiredate, 'mm') = '09';
+
+ENAME                HIREDATE                                                                                                                                                                                                                                                                               
+-------------------- --------                                                                                                                                                                                                                                                                               
+MARTIN               81/09/28                                                                                                                                                                                                                                                                               
+TURNER               81/09/08                                                                                                                                                                                                                                                                               
+
+SQL> select ename, hiredate from emp where to_char(hiredate, 'mm') = (select to_char(sysdate, 'mm') from dual);
+
+ENAME                HIREDATE                                                                                                                                                                                                                                                                               
+-------------------- --------                                                                                                                                                                                                                                                                               
+MARTIN               81/09/28                                                                                                                                                                                                                                                                               
+TURNER               81/09/08                                                                                                                                                                                                                                                                               
+
+SQL> --sysdate로 시스템 날짜 얻어오기
+SQL> --add_months
+SQL> select add_months(sysdate,1) from dual;
+
+ADD_MONT                                                                                                                                                                                                                                                                                                    
+--------                                                                                                                                                                                                                                                                                                    
+20/10/21                                                                                                                                                                                                                                                                                                    
+
+SQL> select add_months(sysdate,3) from dual;
+
+ADD_MONT                                                                                                                                                                                                                                                                                                    
+--------                                                                                                                                                                                                                                                                                                    
+20/12/21                                                                                                                                                                                                                                                                                                    
+
+SQL> spool off;
